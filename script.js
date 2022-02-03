@@ -1,7 +1,6 @@
-// const { fetchProducts } = require("./helpers/fetchProducts");
+const list = document.querySelector('.cart__items');
 
 function removeAllItems() {
-  const list = document.querySelector('.cart__items');
   const items = document.querySelectorAll('.cart__item');
   items.forEach((item) => {
     list.removeChild(item);
@@ -32,9 +31,7 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }) {
 
  async function addItemToCart(event) {
    const id = event.target.parentNode.children[0].innerText;
-   // const img = event.target.parentNode.children[2].src;
    const addItem = await fetchItem(id);
-   const list = document.querySelector('.cart__items');
    list.appendChild(createCartItemElement(addItem));
   }
 
@@ -69,5 +66,7 @@ createdProductsList();
 /* function getSkuFromProductItem(item) {
   return item.querySelector('span.item__sku').innerText;
 } */
+
+saveCartItems(list);
 
 window.onload = () => { };
