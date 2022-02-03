@@ -2,13 +2,6 @@ let allCart = [];
 const list = document.querySelector('.cart__items');
 const itemsCart = JSON.parse(getSavedCartItems('cartItems'));
 
-if (itemsCart) {
-  allCart = itemsCart; // reatribui o array 
-  itemsCart.forEach((item) => {
-    list.appendChild(createCartItemElement(item));
-  });
-}
-
 function removeAllItems() {
   const items = document.querySelectorAll('.cart__item');
   items.forEach((item) => {
@@ -47,6 +40,13 @@ async function addItemToCart(event) {
    list.appendChild(createCartItemElement(addItem));
    allCart.push(addItem);
    saveCartItems(JSON.stringify(allCart));
+}
+
+if (itemsCart) {
+  allCart = itemsCart; // reatribui o array 
+  itemsCart.forEach((item) => {
+    list.appendChild(createCartItemElement(item));
+  });
 }
 
 function createCustomElement(element, className, innerText) {
