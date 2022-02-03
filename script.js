@@ -1,4 +1,13 @@
+let allCart = [];
 const list = document.querySelector('.cart__items');
+const itemsCart = JSON.parse(getSavedCartItems('cartItems'));
+
+if (itemsCart) {
+  allCart = itemsCart; // reatribui o array 
+  itemsCart.forEach((item) => {
+    list.appendChild(createCartItemElement(item));
+  });
+}
 
 function removeAllItems() {
   const items = document.querySelectorAll('.cart__item');
@@ -19,6 +28,9 @@ function createProductImageElement(imageSource) {
 
 function cartItemClickListener(event) {
   event.target.remove();
+  allCart.splice(-1, 1);
+  saveCartItems(JSON.stringify(allCart));
+  console.log(allCart);
 }
 
 function createCartItemElement({ id: sku, title: name, price: salePrice }) { 
@@ -29,11 +41,13 @@ function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   return li;
 }
 
- async function addItemToCart(event) {
+async function addItemToCart(event) {
    const id = event.target.parentNode.children[0].innerText;
    const addItem = await fetchItem(id);
    list.appendChild(createCartItemElement(addItem));
-  }
+   allCart.push(addItem);
+   saveCartItems(JSON.stringify(allCart));
+}
 
 function createCustomElement(element, className, innerText) {
   const e = document.createElement(element);
@@ -42,7 +56,7 @@ function createCustomElement(element, className, innerText) {
   return e;
 }
 
-function createProductItemElement({ id: sku, title: name, thumbnail: image }) { // alias
+function createProductItemElement({ id: sku, title: name, thumbnail: image }) { // alias --> id: sku
   const section = document.createElement('section');
   section.className = 'item';
   section.appendChild(createCustomElement('span', 'item__sku', sku));
@@ -67,6 +81,4 @@ createdProductsList();
   return item.querySelector('span.item__sku').innerText;
 } */
 
-saveCartItems(list);
-
-window.onload = () => { };
+window.onload = () => {};

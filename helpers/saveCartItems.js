@@ -1,5 +1,5 @@
 const saveCartItems = (Item) => {
-  const savedCart = JSON.stringify(localStorage.setItem('cartItems', Item));
+  const savedCart = localStorage.setItem('cartItems', Item);
   return savedCart;
 };
 
