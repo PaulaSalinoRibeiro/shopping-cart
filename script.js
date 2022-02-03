@@ -8,7 +8,7 @@ function createProductImageElement(imageSource) {
 }
 
 function cartItemClickListener(event) {
-  //
+  event.target.remove();
 }
 
 function createCartItemElement({ id: sku, title: name, price: salePrice }) { 
