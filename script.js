@@ -1,6 +1,11 @@
-let allCart = [];
+let savedItemsOfCart = [];
 const list = document.querySelector('.cart__items');
 const itemsCart = JSON.parse(getSavedCartItems('cartItems'));
+
+const cart = document.querySelector('.cart');
+const p = document.createElement('p');
+p.className = 'total-price';
+cart.appendChild(p);
 
 function removeAllItems() {
   const items = document.querySelectorAll('.cart__item');
@@ -20,10 +25,13 @@ function createProductImageElement(imageSource) {
 }
 
 function cartItemClickListener(event) {
+  const idDeleted = event.target.innerText.split(' ')[1];
   event.target.remove();
-  allCart.splice(-1, 1);
-  saveCartItems(JSON.stringify(allCart));
-  console.log(allCart);
+  const newSavedItemsOfCart = savedItemsOfCart.filter((item) => item.id !== idDeleted);
+  savedItemsOfCart.splice(-1, 1);
+  saveCartItems(JSON.stringify(savedItemsOfCart));
+  const sum = newSavedItemsOfCart.reduce((acc, item) => acc + item.price, 0.00);
+  p.innerText = `${parseFloat(sum.toFixed(2))}`;
 }
 
 function createCartItemElement({ id: sku, title: name, price: salePrice }) { 
@@ -38,12 +46,14 @@ async function addItemToCart(event) {
    const id = event.target.parentNode.children[0].innerText;
    const addItem = await fetchItem(id);
    list.appendChild(createCartItemElement(addItem));
-   allCart.push(addItem);
-   saveCartItems(JSON.stringify(allCart));
+   savedItemsOfCart.push(addItem);
+   saveCartItems(JSON.stringify(savedItemsOfCart));
+   const sum = savedItemsOfCart.reduce((acc, item) => acc + item.price, 0.00);
+   p.innerText = `${parseFloat(sum.toFixed(2))}`;
 }
 
 if (itemsCart) {
-  allCart = itemsCart; // reatribui o array 
+  savedItemsOfCart = itemsCart; // reatribui o array 
   itemsCart.forEach((item) => {
     list.appendChild(createCartItemElement(item));
   });
