@@ -135,6 +135,11 @@ body {
   height: 100vh;
 }
 
+.cart__items {
+  display: flex;
+  flex-direction: column;
+}
+
 .cart .cart__items {
   height: 500px;
   overflow-y: scroll;
@@ -146,4 +151,18 @@ body {
   margin: 0 auto;
   border: 2px solid rgb(5, 52, 219);
   background-color: rgb(249, 249, 246);
+}
+
+.cart__item {
+  align-self: center;
+  padding: 10px;
+  margin: 5px;
+  border: 1px solid black;
+}
+
+.total-price {
+  margin-top: 15px;
+  color: green;
+  font-weight: 800;
+  align-self: center;
 }
